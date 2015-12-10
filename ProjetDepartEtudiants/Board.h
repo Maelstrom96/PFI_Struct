@@ -32,6 +32,8 @@ private:
 	Matrice<int>  caseTrajet_; 
 	system_clock::time_point tempsDeDepart_;
 	system_clock::time_point tempsCumulatif_;
+   bool CaseDisponible(unsigned int i, unsigned int j);
+   vector<int> caseDispo_;
 
 private:
 	//--- Méthode lancée par le PlacerCavalier public

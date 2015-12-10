@@ -6,6 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 #include "Board.h"
 #include <string>
+#include <cmath>
 using namespace std;
 
 const int Board::iMAXCASES = 8;
@@ -43,20 +44,26 @@ void Board::PlacerCavalier(unsigned int i, unsigned int j)
 
 	// si tout est visité, on doit afficher ce résultat possible ce qui va devrait comprendre les instructions suivantes : 
 	//
-		auto stop = system_clock::now();
-		auto tempsEcoule = stop - tempsDeDepart_;
-		auto tempsEcouleCumulatif = stop - tempsCumulatif_;
-		system("cls");
-		AfficherTrajet(++nombreDeSolutions_, tempsEcoule, tempsEcouleCumulatif);
-		tempsDeDepart_ = system_clock::now();
-
+   if (ToutEstVisite())
+   {
+      auto stop = system_clock::now();
+      auto tempsEcoule = stop - tempsDeDepart_;
+      auto tempsEcouleCumulatif = stop - tempsCumulatif_;
+      system("cls");
+      AfficherTrajet(++nombreDeSolutions_, tempsEcoule, tempsEcouleCumulatif);
+      tempsDeDepart_ = system_clock::now();
+   }
 	// sinon on doit procéder à continuer de chercher le trajet du cavalier récursivement (backtracking)
 	// 
 	// 1 - faire une liste des cases qu'on peut aller visiter à partir de la case où on se trouve présentement
 	// 2 - pour toutes ces cases, on doit aller y placer un cavalier; lorsqu'il revient à l'instruction qui suit
 	//     celles-ci, ça veut dire que tous les trajets possibles ont été visités à partir de la position i,j
 	//     et que nous devons ...
-
+   else
+   {
+      if (CaseDisponible(i,j))
+         PlacerCavalier(i, j);
+   }
 
 	// 'démarquer' cette classe puisqu'on va revenir un pas en arrière
 	// pour chercher un nouveau trajet (backtracking)
@@ -148,4 +155,18 @@ void Board::Wait(int iNbMilliSec) const
 bool Board::ToutEstVisite() const
 {
 	return (noPasDuTrajet_ >= ((iMAXCASES * iMAXCASES)));
+}
+
+
+bool Board::CaseDisponible(unsigned int i, unsigned int j)
+{
+   for (int x = i - 2; x < i + 2; ++x)
+   {
+      for (int y = j - 2; y < j + 2; ++y)
+      {
+         if (abs(x) + abs(y) == 3)
+            if (caseVisitee_[abs(x)][abs(y)] == false)
+               return true;
+      }
+   }
 }
