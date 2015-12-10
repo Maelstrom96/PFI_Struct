@@ -61,8 +61,7 @@ void Board::PlacerCavalier(unsigned int i, unsigned int j)
 	//     et que nous devons ...
    else
    {
-      if (CaseDisponible(i,j))
-         PlacerCavalier(i, j);
+	   CaseDisponible(i, j);
    }
 
 	// 'démarquer' cette classe puisqu'on va revenir un pas en arrière
@@ -158,15 +157,20 @@ bool Board::ToutEstVisite() const
 }
 
 
-bool Board::CaseDisponible(unsigned int i, unsigned int j)
+void Board::CaseDisponible(unsigned int i, unsigned int j)
 {
    for (int x = i - 2; x < i + 2; ++x)
    {
       for (int y = j - 2; y < j + 2; ++y)
       {
-         if (abs(x) + abs(y) == 3)
-            if (caseVisitee_[abs(x)][abs(y)] == false)
-               return true;
+         if (abs(x) + abs(y) == 3 && CaseAccesible(x,y) && caseVisitee_[x][y] == false)
+			 PlacerCavalier(x, y);
       }
    }
+}
+
+bool CaseAccesible(int i, int j)
+{
+	if (i >= 0 || j >= 0 || i <= 7 || j <= 7) return true;
+	else return false;
 }
