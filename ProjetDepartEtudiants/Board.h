@@ -28,8 +28,6 @@ private:
 	int  nombreDeSolutions_;
 	int  ligneDepart_;
 	int  colonneDepart_;
-	Matrice<bool> caseVisitee_;  
-	Matrice<int>  caseTrajet_; 
 	system_clock::time_point tempsDeDepart_;
 	system_clock::time_point tempsCumulatif_;
 

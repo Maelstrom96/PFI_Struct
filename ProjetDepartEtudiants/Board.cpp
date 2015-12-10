@@ -11,16 +11,16 @@ using namespace std;
 const int Board::iMAXCASES = 8;
 
 Board::Board(int ligne, int colonne, ostream & sortie, bool veutTrace)
-:ligneDepart_(ligne), colonneDepart_(colonne), rOut(sortie), traceDemandee_(veutTrace),
- caseVisitee_(iMAXCASES, iMAXCASES), caseTrajet_(iMAXCASES, iMAXCASES)
+:ligneDepart_(ligne), colonneDepart_(colonne), rOut(sortie), traceDemandee_(veutTrace)
 {
-	for (int i=0; i<iMAXCASES; i++)
-		for (int j=0; j<iMAXCASES; j++)
-		{
-			caseVisitee_[i][j] = false;
-			caseTrajet_[i][j] = -1;
-			noPasDuTrajet_ = 0;
-		}
+   for (int i = 0; i < iMAXCASES; i++)
+   {
+      for (int j = 0; j < iMAXCASES; j++)
+      {
+         noPasDuTrajet_ = 0;
+      }
+   }
+      noPasDuTrajet_ = 0;
 	nombreDeSolutions_ = 0;
 }
 
@@ -33,8 +33,6 @@ void Board::Solutionner()
 
 void Board::PlacerCavalier(unsigned int i, unsigned int j)
 {
-	// Marquer cette case que l'on vient d'atteindre afin d'indiquer qu'elle
-	// contient un cavalier
 	caseVisitee_[i][j] = true;
 	caseTrajet_[i][j] = noPasDuTrajet_;
 	noPasDuTrajet_++;
