@@ -1,16 +1,18 @@
 #pragma once
+#include "Board.h"
 using namespace std;
 
+class Board;
 class Case
 {
    int _x;
    int _y;
    int PriorityIndex;
 
-   void SetPrioriteIndex();
+   void SetPrioriteIndex(Board * board);
 
 public:
-   Case(int x, int y);
+   Case(int x, int y, Board * board);
    Case(const Case & original);
    bool operator < (const Case& original) const;
    ~Case();

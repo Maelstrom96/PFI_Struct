@@ -12,6 +12,7 @@
 using namespace std;
 using namespace std::chrono;
 
+class Case;
 class Board
 {
 public:
@@ -20,6 +21,8 @@ public:
 
 	//--- Méthode utilisée par le client pour lancer la recherche de solution
 	void Solutionner();
+
+   int NbCaseDisponible(int i, int j);
 
 private:
 	static const int iMAXCASES;  // Nombre de cases de l'échiquier
@@ -36,9 +39,9 @@ private:
 	Matrice<int>  caseTrajet_; 
 	system_clock::time_point tempsDeDepart_;
 	system_clock::time_point tempsCumulatif_;
-    vector<Case> CaseDisponible(int i, int j);
     bool CaseAccesible(int i, int j);
 	void TrierCases(vector<Case> & oCases);
+   vector<Case> CaseDisponible(int i, int j);
 
 private:
 	//--- Méthode lancée par le PlacerCavalier public
