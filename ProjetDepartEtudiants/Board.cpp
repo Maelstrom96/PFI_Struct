@@ -5,6 +5,7 @@
 // modifié et complété par Mathieu Lussier et Alexandre St-Jacques le 10 décembre 2015
 ///////////////////////////////////////////////////////////////////////////////////////
 #include "Board.h"
+#include "Case.h"
 #include <string>
 #include <cmath>
 #include <vector>
@@ -174,12 +175,28 @@ vector<Case> Board::CaseDisponible(int i, int j)
       {
 		  if ((abs(x) + abs(y) == 3) && CaseAccesible(x + i, y + j) && caseVisitee_[x+i][y+j] == false)
 		  {
-			  Case oCase(x + i, y + j);
+			  Case oCase(x + i, y + j, this);
 			  oCases.push_back(oCase);
 		  }
       }
    }
    return oCases;
+}
+
+int Board::NbCaseDisponible(int i, int j)
+{
+   int Total = 0;
+   for (int y = NEG_DEUX; y <= DEUX; y++)
+   {
+      for (int x = NEG_DEUX; x <= DEUX; x++)
+      {
+         if ((abs(x) + abs(y) == 3) && CaseAccesible(x + i, y + j) && caseVisitee_[x + i][y + j] == false)
+         {
+            Total++;
+         }
+      }
+   }
+   return Total;
 }
 
 //Verification si la case du deplacement est valide 

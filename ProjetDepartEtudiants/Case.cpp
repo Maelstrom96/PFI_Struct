@@ -5,11 +5,11 @@ Case::~Case()
 {
 }
 
-Case::Case(int x, int y)
+Case::Case(int x, int y, Board * board)
 {
 	SetX(x);
 	SetY(y);
-	SetPrioriteIndex();
+	SetPrioriteIndex(board);
 }
 
 Case::Case(const Case & original)
@@ -25,8 +25,11 @@ bool Case::operator < (const Case& original) const
 }
 
 //Definir la priorite des deplacements 
-void Case::SetPrioriteIndex()
+void Case::SetPrioriteIndex(Board * board)
 {
+   PriorityIndex = board->NbCaseDisponible(_x, _y);
+
+   /*
 	PriorityIndex = 3;
 	// Walling
 	if (_x == 0 || _y == 0) PriorityIndex = 2;
@@ -39,4 +42,5 @@ void Case::SetPrioriteIndex()
 			if (x == _x && y == _y) PriorityIndex = 1;
 		}
 	}
+   */
 }
