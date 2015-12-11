@@ -8,6 +8,7 @@
 #include "Matrice.h"
 #include <iostream>
 #include <chrono>
+#include "Case.h"
 using namespace std;
 using namespace std::chrono;
 
@@ -22,6 +23,9 @@ public:
 
 private:
 	static const int iMAXCASES;  // Nombre de cases de l'échiquier
+	static const int DEUX;
+	static const int NEG_DEUX;
+	static const int ZERO;
 	ostream & rOut;
 	bool traceDemandee_;
 	int  noPasDuTrajet_;
@@ -32,8 +36,9 @@ private:
 	Matrice<int>  caseTrajet_; 
 	system_clock::time_point tempsDeDepart_;
 	system_clock::time_point tempsCumulatif_;
-   void CaseDisponible(unsigned int i, unsigned int j);
-   bool CaseAccesible(int i, int j);
+    vector<Case> CaseDisponible(int i, int j);
+    bool CaseAccesible(int i, int j);
+	void TrierCases(vector<Case> & oCases);
 
 private:
 	//--- Méthode lancée par le PlacerCavalier public

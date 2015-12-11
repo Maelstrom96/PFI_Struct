@@ -2,14 +2,19 @@
 // le problème du cavalier
 //
 // par Pierre Prud'homme, novembre 2015
-// modifié et complété par <votre nom> et <votre nom si vous êtes en équipe> le <date>
+// modifié et complété par Mathieu Lussier et Alexandre St-Jacques le 10 décembre 2015
 ///////////////////////////////////////////////////////////////////////////////////////
 #include "Board.h"
 #include <string>
 #include <cmath>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 const int Board::iMAXCASES = 8;
+const int Board::DEUX = 2;
+const int Board::NEG_DEUX = -2;
+const int Board::ZERO = 0;
 
 Board::Board(int ligne, int colonne, ostream & sortie, bool veutTrace)
 :ligneDepart_(ligne), colonneDepart_(colonne), rOut(sortie), traceDemandee_(veutTrace),
@@ -61,7 +66,10 @@ void Board::PlacerCavalier(unsigned int i, unsigned int j)
 	//     et que nous devons ...
    else
    {
-	   CaseDisponible(i, j);
+	   vector<Case> oCases = CaseDisponible(i, j);
+	   TrierCases(oCases);
+	   for each(Case oCase in oCases)
+		   PlacerCavalier(oCase.GetX(), oCase.GetY());
    }
 
 	// 'démarquer' cette classe puisqu'on va revenir un pas en arrière
@@ -156,21 +164,33 @@ bool Board::ToutEstVisite() const
 	return (noPasDuTrajet_ >= ((iMAXCASES * iMAXCASES)));
 }
 
-
-void Board::CaseDisponible(unsigned int i, unsigned int j)
+//Creation dun vecteur de case disponible pour le prochain deplacement
+vector<Case> Board::CaseDisponible(int i, int j)
 {
-   for (int x = i - 2; x < i + 2; ++x)
+	vector<Case> oCases;
+	for (int y = NEG_DEUX; y <= DEUX; y++)
    {
-      for (int y = j - 2; y < j + 2; ++y)
+	   for (int x = NEG_DEUX; x <= DEUX; x++)
       {
-         if (abs(x) + abs(y) == 3 && CaseAccesible(x,y) && caseVisitee_[x][y] == false)
-			 PlacerCavalier(x, y);
+		  if ((abs(x) + abs(y) == 3) && CaseAccesible(x + i, y + j) && caseVisitee_[x+i][y+j] == false)
+		  {
+			  Case oCase(x + i, y + j);
+			  oCases.push_back(oCase);
+		  }
       }
    }
+   return oCases;
 }
 
-bool CaseAccesible(int i, int j)
+//Verification si la case du deplacement est valide 
+bool Board::CaseAccesible(int i, int j)
 {
-	if (i >= 0 || j >= 0 || i <= 7 || j <= 7) return true;
+	if (i >= ZERO && j >= ZERO && i < iMAXCASES && j < iMAXCASES) return true;
 	else return false;
+}
+
+//Triage du vecteur par priorite 
+void Board::TrierCases(vector<Case> & oCases)
+{
+	sort(oCases.begin(), oCases.end());
 }
