@@ -1,3 +1,10 @@
+// Case.cpp
+// Object de case ayant une coordonné et un indice de priorité correspondant au nombre de case accessible
+// a partir de celle-ci.
+//
+// par Alexandre St-Jacques et Mathieu Lussier, 10 Decembre 2015
+///////////////////////////////////////////////////////////////////////////////////////
+
 #include "Case.h"
 #include "Board.h"
 
@@ -12,6 +19,12 @@ Case::Case(int x, int y, Board * board)
 	SetPrioriteIndex(board);
 }
 
+////////////////////////////////////////////////////////
+// Case(const Case & original)
+// Constructeur de copie pour la case.
+//
+// intrant : Case
+////////////////////////////////////////////////////////
 Case::Case(const Case & original)
 {
 	_x = original.GetX();
@@ -19,28 +32,27 @@ Case::Case(const Case & original)
 	PriorityIndex = original.PriorityIndex;
 }
 
+////////////////////////////////////////////////////////
+// operator < (const Case& original) const
+// Permet de comparer deux Case.
+// L'operateur à été overide pour utiliser la fonction sort()
+//
+// intrant : Case
+// extrant : bool
+////////////////////////////////////////////////////////
 bool Case::operator < (const Case& original) const
 {
 	return (PriorityIndex < original.PriorityIndex);
 }
 
-//Definir la priorite des deplacements 
+////////////////////////////////////////////////////////
+// SetPrioriteIndex(Board * board)
+// Obtient le nombre de deplacements disponibles et 
+// l'assigne à la case.
+//
+// intrant : Pointeur vers le board utilisé.
+////////////////////////////////////////////////////////
 void Case::SetPrioriteIndex(Board * board)
 {
    PriorityIndex = board->NbCaseDisponible(_x, _y);
-
-   /*
-	PriorityIndex = 3;
-	// Walling
-	if (_x == 0 || _y == 0) PriorityIndex = 2;
-	if (_x == 7 || _y == 7) PriorityIndex = 2;
-	
-	for (int y = 0; y < 8; y += 7)
-	{
-		for (int x = 0; x < 8; x += 7)
-		{
-			if (x == _x && y == _y) PriorityIndex = 1;
-		}
-	}
-   */
 }

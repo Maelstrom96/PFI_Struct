@@ -2,7 +2,7 @@
 // le problème du cavalier
 //
 // par Pierre Prud'homme, novembre 2015
-// modifié et complété par <votre nom> et <votre nom si vous êtes en équipe> le <date>
+// modifié et complété par Alexandre-Jacques et Mathieu Lussier le 10 Decembre 2015
 ///////////////////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "Matrice.h"
